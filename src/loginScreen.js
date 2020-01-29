@@ -51,7 +51,7 @@ class LoginScreen extends Component {
                     />
                 </form>
                 <p/>
-                <Button variant="contained" onClick={this.onSubmit} login> Login </Button>
+                <Button variant="contained" onClick={this.onSubmit} Login> Login </Button>
             </div>
         );
     }
