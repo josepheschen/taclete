@@ -38,7 +38,7 @@ class LoginScreen extends Component {
                         variant="outlined"
                         label="Email"
                         type="text"
-                    />
+                        />
                     <p/>
                     <TextField
                         id="password-input-outlined"
@@ -46,10 +46,10 @@ class LoginScreen extends Component {
                         label="Password"
                         type="password"
                         autoComplete="current-password"
-                    />
+                        />
                 </form>
                 <p/>
-                <Button variant="contained" Login> Login </Button>
+                <Button variant="contained"> Login </Button>
             </div>
         );
     }
