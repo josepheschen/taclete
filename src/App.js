@@ -1,12 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import csuLogo from './csuLogo.png'
+import rotcLogo from './rotcLogo.png'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+
+        <img src={rotcLogo} className="App-rotcLogo" alt="logo" />
+        <img src={csuLogo} className="App-csuLogo" alt="logo" />
+        
+
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
