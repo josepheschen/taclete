@@ -21,7 +21,7 @@ class LoginScreen extends Component {
             [e.target.name]: value
         });
     };
-    o
+    
     onSubmit = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
