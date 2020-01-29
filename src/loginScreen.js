@@ -46,12 +46,10 @@ class LoginScreen extends Component {
                         label="Password"
                         type="password"
                         autoComplete="current-password"
-                        onChange={this.onChange}
-                        
                     />
                 </form>
                 <p/>
-                <Button variant="contained" onClick={this.onSubmit} Login> Login </Button>
+                <Button variant="contained" Login> Login </Button>
             </div>
         );
     }
