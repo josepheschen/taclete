@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 class LoginScreen extends Component {
@@ -23,7 +24,6 @@ class LoginScreen extends Component {
         root: {
             '& .MuiTextField-root': {
                 margin: theme.spacing(1),
-                width: 200,
                 color: 'white',
             },
         },
@@ -31,24 +31,28 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <form className={this.useStyles.root} noValidate autoComplete="off">
-                <TextField>
-                    id={'standard-basic'}
-                    defaultValue={'Email'}
-
-                    onChange={e => this.onChange(e)}
-                    value={this.state.email}
-                </TextField>
-                <br/>
-                <TextField>
-                    id={'standard-password-input'}
-                    defaultValue={'Password'}
-                    type={'password'}
-
-                    onChange={e => this.onChange(e)}
-                    value={this.state.email}
-                </TextField>
-            </form>
+            <div>
+                <form className={this.useStyles.root} noValidate autoComplete="off">
+                    <TextField
+                        id="email-outlined"
+                        variant="outlined"
+                        label="Email"
+                        type="text"
+                    />
+                    <p/>
+                    <TextField
+                        id="password-input-outlined"
+                        variant="outlined"
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={this.onChange}
+                        
+                    />
+                </form>
+                <p/>
+                <Button variant="contained" onClick={this.onSubmit} login> Login </Button>
+            </div>
         );
     }
 }
