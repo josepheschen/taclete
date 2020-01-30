@@ -26,16 +26,16 @@ class LoginScreen extends Component {
         },
     }));
 
-    onEmailChange = (e) => {
+    onEmailChange = (event) => {
         this.setState({
-            'email': e.target.value
-        }, this.props.handleEmailChange(e.target.value));
+            'email': event.target.value
+        }, this.props.handleEmailChange(event.target.value));
     };
 
-    onPasswordChange = (e) => {
+    onPasswordChange = (event) => {
         this.setState({
-            'password': e.target.value
-        }, this.props.handlePasswordChange(e.target.value));
+            'password': event.target.value
+        }, this.props.handlePasswordChange(event.target.value));
 
     };
 
