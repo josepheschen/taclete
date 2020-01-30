@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import LoginScreen from './loginScreen.js';
 
 class BaseScreen extends Component {
     constructor(props) {
@@ -9,27 +7,35 @@ class BaseScreen extends Component {
         this.state = {
             email: '',
             password: '',
+            prevScreen: '',
             LOGIN: true,
             ROTC: false,
             CADRE: false,
             HES: false,
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.registerButton=this.registerButton.bind(this);
     }
 
-    onChange = (e) => {
-        const value = e.target.value;
+    handleEmailChange = (value) => {
         this.setState({
-            [e.target.name]: value
+            'email': value
+        });
+    };
+
+    handlePasswordChange = (value) => {
+        this.setState({
+            'password': value
         });
     };
     
-    onSubmit = () => {
+    handleSubmit = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
-        
+
         // this will change but this is how we are going to manage flow for now
         const userType = this.state.email;
         if(userType === 'HES' || userType === 'ROTC' || userType === 'CADRE') {
@@ -39,47 +45,34 @@ class BaseScreen extends Component {
             });
         }
 
+
     };
 
-    useStyles = makeStyles(theme => ({
-        root: {
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-                width: 200,
-            },
-        },
-    }));
+    registerButton = () => {
+        console.log("Email: " + this.state.email);
+        console.log("Password: " + this.state.password);
+    }
 
     render() {
+
+        if (this.state.LOGIN) {
+            return (
+                <div>
+                    <LoginScreen
+                        handleEmailChange={this.handleEmailChange}
+                        handlePasswordChange={this.handlePasswordChange}
+                        handleSubmit={this.handleSubmit}
+                        registerButton={this.registerButton}
+                    />
+                </div>
+            );
+        }
+
         return (
             <div>
-                {this.state.LOGIN &&
-                <form className={this.useStyles.root} noValidate autoComplete="off" onChange={this.onChange}>
-                    <TextField
-                        name="email"
-                        variant="outlined"
-                        label="Email"
-                        type="text"
-                        value={this.state.email}
-                        />
-                    <p/>
-                    <TextField
-                        name="password"
-                        variant="outlined"
-                        label="Password"
-                        type="password"
-                        value={this.state.password}
-                        />
-                    <p/>
-                    <Button variant="contained" color="primary" onClick={this.onSubmit}> Login </Button>
-                    <p/>
-                    <Button variant="contained" onClick={this.onSubmit}> Register </Button>
-                </form>
-                }
-
-
+                <h1> Sucessfully logged in. </h1>
             </div>
-        );
+        )
     }
 }
 export default BaseScreen;

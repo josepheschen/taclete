@@ -1,8 +1,8 @@
 import React from 'react';
 import BaseScreen from './baseScreen';
 import './App.css';
-import csuLogo from './csuLogo.png'
-import rotcLogo from './rotcLogo.png'
+import csuLogo from './Images/csuLogo.png'
+import rotcLogo from './Images/rotcLogo.png'
 
 function App() {
 
