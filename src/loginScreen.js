@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import TypeSelect from './TypeSelect';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
 import rotcLogo from "./Images/rotcLogo.png";
 import csuRam from "./Images/csuRam.png";
+import Select from '@material-ui/core/Select';
+import InputLabel from "@material-ui/core/InputLabel";
+
 
 class LoginScreen extends Component {
 
@@ -24,6 +28,10 @@ class LoginScreen extends Component {
             '& .MuiTextField-root': {
                 margin: theme.spacing(1),
                 width: 200,
+            },
+
+            selectEmpty: {
+                marginTop: theme.spacing(2),
             },
         },
     }));
@@ -72,13 +80,22 @@ class LoginScreen extends Component {
                         onChange={this.onPasswordChange}
                     />
                     <p/>
-                    <TypeSelect
-                        selectAccountType={this.onSubmit}
-                        options={[
-                        { value: 'HES', label: 'HES' },
-                        { value: 'CARDE', label: 'CARDE' },
-                        { value: 'ROTC', label: 'ROTC' },
-                            ]}/>
+                    <FormControl style={{minWidth: 120}}>
+                        <InputLabel id="accountTypeSelectLabel">Account Type</InputLabel>
+                        <Select
+                            labelId="accountTypeSelectLabel"
+                            id="accountTypeSelect"
+                            value={this.state.email}
+                            onChange={this.onEmailChange}
+                        >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={'HES'}>HES</MenuItem>
+                                <MenuItem value={'CADRE'}>CADRE</MenuItem>
+                                <MenuItem value={'ROTC'}>ROTC</MenuItem>
+                        </Select>
+                    </FormControl>
                     <p/>
                     <Button variant="contained" color="primary" onClick={this.onSubmit}> Login </Button>
                     <p/>
