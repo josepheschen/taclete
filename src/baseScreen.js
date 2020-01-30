@@ -7,7 +7,6 @@ class BaseScreen extends Component {
         this.state = {
             email: '',
             password: '',
-            prevScreen: '',
             LOGIN: true,
             ROTC: false,
             CADRE: false,
@@ -44,8 +43,6 @@ class BaseScreen extends Component {
                 LOGIN: false,
             });
         }
-
-
     };
 
     registerButton = () => {

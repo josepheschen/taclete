@@ -7,12 +7,11 @@ import rotcLogo from './Images/rotcLogo.png'
 function App() {
 
   return (
-    <div className="App">
+    <div className="App" id="banner">
       <header className="App-header">
         <h1> TACLETE </h1>
-        <img src={rotcLogo} className="App-rotcLogo" alt="logo" />
+        <img  src={rotcLogo} className="App-rotcLogo" alt="logo"/>
         <img src={csuLogo} className="App-csuLogo" alt="logo" />
-
         <br/>
         <BaseScreen />
       </header>
