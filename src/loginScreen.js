@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-
+import TypeSelect from './TypeSelect';
 
 class LoginScreen extends Component {
 
@@ -48,6 +48,8 @@ class LoginScreen extends Component {
         return (
             <div>
                 <form className={this.useStyles.root} noValidate autoComplete="off">
+
+
                     <TextField
                         name="email"
                         variant="outlined"
@@ -66,9 +68,18 @@ class LoginScreen extends Component {
                         onChange={this.onPasswordChange}
                     />
                     <p/>
+                    <TypeSelect
+                        selectAccountType={this.onSubmit}
+                        options={[
+                        { value: 'HES', label: 'HES' },
+                        { value: 'CARDE', label: 'CARDE' },
+                        { value: 'ROTC', label: 'ROTC' },
+                            ]}/>
+                    <p/>
                     <Button variant="contained" color="primary" onClick={this.onSubmit}> Login </Button>
                     <p/>
                     <Button variant="contained" onClick={this.props.registerButton}> Register </Button>
+                    <p/>
                 </form>
             </div>
         );
