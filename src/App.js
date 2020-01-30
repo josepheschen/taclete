@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h1> TACLETE </h1>
         <img src={rotcLogo} className="App-rotcLogo" alt="logo" />
         <img src={csuLogo} className="App-csuLogo" alt="logo" />
-        <h1> TACLETE </h1>
-        <img src={logo} className="App-logo" alt="logo" />
+
         <br/>
         <LoginScreen />
       </header>
