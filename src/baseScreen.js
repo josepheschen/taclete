@@ -11,6 +11,7 @@ class BaseScreen extends Component {
             ROTC: false,
             CADRE: false,
             HES: false,
+            CADET: false,
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -62,6 +63,12 @@ class BaseScreen extends Component {
                         registerButton={this.registerButton}
                     />
                 </div>
+            );
+        } else if (this.state.ROTC || this.state.CADRE || this.state.HES) {
+            return (
+              <div>
+                  <p>Coach View</p>
+              </div>
             );
         }
 
