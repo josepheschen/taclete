@@ -1,20 +1,19 @@
 import React from 'react';
-import LoginScreen from './loginScreen'
+import BaseScreen from './baseScreen';
 import './App.css';
-import csuLogo from './csuLogo.png'
-import rotcLogo from './rotcLogo.png'
+import csuLogo from './Images/csuLogo.png'
+import rotcLogo from './Images/rotcLogo.png'
 
 function App() {
 
   return (
-    <div className="App">
+    <div className="App" id="banner">
       <header className="App-header">
         <h1> TACLETE </h1>
-        <img src={rotcLogo} className="App-rotcLogo" alt="logo" />
+        <img  src={rotcLogo} className="App-rotcLogo" alt="logo"/>
         <img src={csuLogo} className="App-csuLogo" alt="logo" />
-
         <br/>
-        <LoginScreen />
+        <BaseScreen />
       </header>
     </div>
   );
