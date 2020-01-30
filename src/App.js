@@ -1,7 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
-import BaseScreen from './baseScreen'
+import BaseScreen from './baseScreen';
 import './App.css';
+import csuLogo from './csuLogo.png'
+import rotcLogo from './rotcLogo.png'
 
 function App() {
 
@@ -9,7 +10,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1> TACLETE </h1>
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={rotcLogo} className="App-rotcLogo" alt="logo" />
+        <img src={csuLogo} className="App-csuLogo" alt="logo" />
+
         <br/>
         <BaseScreen />
       </header>
