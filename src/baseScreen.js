@@ -9,10 +9,10 @@ class BaseScreen extends Component {
         this.state = {
             email: '',
             password: '',
-            onLoginScreen: true,
-            onROTCScreen: false,
-            onCadreScreen: false,
-            onHESScreen: false,
+            LOGIN: true,
+            ROTC: false,
+            CADRE: false,
+            HES: false,
         };
 
         this.onChange = this.onChange.bind(this);
@@ -29,6 +29,16 @@ class BaseScreen extends Component {
     onSubmit = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
+        
+        // this will change but this is how we are going to manage flow for now
+        const userType = this.state.email;
+        if(userType === 'HES' || userType === 'ROTC' || userType === 'CADRE') {
+            this.setState({
+                [userType]: true,
+                LOGIN: false,
+            });
+        }
+
     };
 
     useStyles = makeStyles(theme => ({
@@ -43,7 +53,7 @@ class BaseScreen extends Component {
     render() {
         return (
             <div>
-                {this.state.onLoginScreen &&
+                {this.state.LOGIN &&
                 <form className={this.useStyles.root} noValidate autoComplete="off" onChange={this.onChange}>
                     <TextField
                         name="email"
@@ -65,8 +75,9 @@ class BaseScreen extends Component {
                     <p/>
                     <Button variant="contained" onClick={this.onSubmit}> Register </Button>
                 </form>
-
                 }
+
+
             </div>
         );
     }
