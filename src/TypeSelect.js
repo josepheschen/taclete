@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import Select from "react-select";
 
 class TypeSelect extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
-        const {accountType} = this.state;
         return (
             <Select
                 onChange={this.props.selectAccountType}
@@ -17,5 +13,6 @@ class TypeSelect extends Component {
         );
     }
 }
+
 
 export default TypeSelect;
