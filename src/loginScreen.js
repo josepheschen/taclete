@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+<<<<<<< Updated upstream
 
+=======
+import TypeSelect from './TypeSelect';
+import rotcLogo from "./Images/rotcLogo.png";
+import csuRam from "./Images/csuRam.png";
+>>>>>>> Stashed changes
 
 class LoginScreen extends Component {
 
@@ -40,13 +46,15 @@ class LoginScreen extends Component {
     };
 
     onSubmit = () => {
-        console.log("loginScreen email value: " + this.state.email);
         this.props.handleSubmit();
     };
 
     render() {
         return (
             <div>
+                <img src={rotcLogo} height="300px" width="300px" alt="logo"/>
+                <img src={csuRam} height="300px" width="300px" alt="logo" />
+                <br/><br/>
                 <form className={this.useStyles.root} noValidate autoComplete="off">
                     <TextField
                         name="email"
