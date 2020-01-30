@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import LoginScreen from './loginScreen'
+import BaseScreen from './baseScreen'
 import './App.css';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
         <h1> TACLETE </h1>
         <img src={logo} className="App-logo" alt="logo" />
         <br/>
-        <LoginScreen />
+        <BaseScreen />
       </header>
     </div>
   );
