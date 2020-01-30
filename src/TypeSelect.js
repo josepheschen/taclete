@@ -4,9 +4,6 @@ import Select from "react-select";
 class TypeSelect extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            accountType: null,
-        };
     }
 
     render() {
