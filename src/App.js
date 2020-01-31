@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseScreen from './baseScreen';
+import BaseScreen from './BaseScreen';
 import './App.css';
 
 function App() {
