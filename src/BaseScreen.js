@@ -14,6 +14,7 @@ class BaseScreen extends Component {
             CADRE: false,
             HES: false,
             CADET: false,
+            REGISTER: false,
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -76,6 +77,12 @@ class BaseScreen extends Component {
             return (
                 <div>
                     <p>Cadet View</p>
+                </div>
+            );
+        } else if (this.state.REGISTER) {
+            return (
+                <div>
+                    <p>Register View</p>
                 </div>
             );
         }
