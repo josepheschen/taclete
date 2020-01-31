@@ -52,7 +52,13 @@ class BaseScreen extends Component {
     registerButton = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
-    }
+
+        //this will change state to register
+        this.setState({
+            LOGIN: false,
+            REGISTER: true,
+        });
+    };
 
     render() {
 

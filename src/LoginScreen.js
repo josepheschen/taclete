@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
-import rotcLogo from "./Images/rotcLogo.png";
-import csuRam from "./Images/csuRam.png";
 import Select from '@material-ui/core/Select';
 import InputLabel from "@material-ui/core/InputLabel";
 
@@ -56,9 +54,6 @@ class LoginScreen extends Component {
     render() {
         return (
             <div>
-                <img src={rotcLogo} height="300px" width="300px" alt="logo"/>
-                <img src={csuRam} height="300px" width="300px" alt="logo" />
-                <br/><br/>
                 <form className={this.useStyles.root} noValidate autoComplete="off">
 
 

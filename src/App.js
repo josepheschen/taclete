@@ -9,7 +9,6 @@ function App() {
       <header className="App-header">
         <h1> TACLETE </h1>
 
-        <br/>
         <BaseScreen />
       </header>
     </div>
