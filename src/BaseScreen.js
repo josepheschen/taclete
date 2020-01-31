@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LoginScreen from './loginScreen.js';
+import LoginScreen from './LoginScreen.js';
 
 class BaseScreen extends Component {
     constructor(props) {
@@ -7,10 +7,13 @@ class BaseScreen extends Component {
         this.state = {
             email: '',
             password: '',
+            accountType: '',
+            groupType: '',
             LOGIN: true,
             ROTC: false,
             CADRE: false,
             HES: false,
+            CADET: false,
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -37,7 +40,7 @@ class BaseScreen extends Component {
 
         // this will change but this is how we are going to manage flow for now
         const userType = this.state.email;
-        if(userType === 'HES' || userType === 'ROTC' || userType === 'CADRE') {
+        if(userType === 'HES' || userType === 'ROTC' || userType === 'CADRE' || userType === 'CADET') {
             this.setState({
                 [userType]: true,
                 LOGIN: false,
@@ -61,6 +64,18 @@ class BaseScreen extends Component {
                         handleSubmit={this.handleSubmit}
                         registerButton={this.registerButton}
                     />
+                </div>
+            );
+        } else if (this.state.ROTC || this.state.CADRE || this.state.HES) {
+            return (
+              <div>
+                  <p>Coach View</p>
+              </div>
+            );
+        } else if (this.state.CADET) {
+            return (
+                <div>
+                    <p>Cadet View</p>
                 </div>
             );
         }
