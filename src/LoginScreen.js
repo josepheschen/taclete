@@ -89,6 +89,7 @@ class LoginScreen extends Component {
                                 <MenuItem value={'HES'}>HES</MenuItem>
                                 <MenuItem value={'CADRE'}>CADRE</MenuItem>
                                 <MenuItem value={'ROTC'}>ROTC</MenuItem>
+                                <MenuItem value={'CADET'}>CADET</MenuItem>
                         </Select>
                     </FormControl>
                     <p/>

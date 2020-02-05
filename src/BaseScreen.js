@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen.js';
+import RegisterScreen from './RegisterScreen';
+import Snackbar from './Snackbar';
+import AthleteHome from './AthleteHome.js'
+import CoachHome from "./CoachHome.js";
+
 
 class BaseScreen extends Component {
     constructor(props) {
@@ -15,6 +20,7 @@ class BaseScreen extends Component {
             HES: false,
             CADET: false,
             REGISTER: false,
+            showPopUp: false,
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -49,6 +55,20 @@ class BaseScreen extends Component {
         }
     };
 
+    snackbarRef = React.createRef();
+    handleRegister = (userType) => {
+        console.log("Email: " + this.state.email);
+        console.log("Password: " + this.state.password);
+
+        // redirecting to login, alerting user of success (no check for duplicates right now)
+        this.setState({
+            // this.userType = true;
+            LOGIN: true
+        });
+        this.snackbarRef.current.openSnackBar('Account created successfuly.')
+    };
+
+
     registerButton = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
@@ -58,6 +78,7 @@ class BaseScreen extends Component {
             LOGIN: false,
             REGISTER: true,
         });
+
     };
 
     render() {
@@ -76,19 +97,28 @@ class BaseScreen extends Component {
         } else if (this.state.ROTC || this.state.CADRE || this.state.HES) {
             return (
               <div>
-                  <p>Coach View</p>
+                  <CoachHome
+
+                  />
               </div>
             );
         } else if (this.state.CADET) {
             return (
                 <div>
-                    <p>Cadet View</p>
+                    <AthleteHome
+
+                    />
                 </div>
             );
         } else if (this.state.REGISTER) {
             return (
                 <div>
-                    <p>Register View</p>
+                    <RegisterScreen
+                        handleEmailChange={this.handleEmailChange}
+                        handlePasswordChange={this.handlePasswordChange}
+                        handleRegister={this.handleRegister}
+                    />
+                    <Snackbar ref = {this.snackbarRef} />
                 </div>
             );
         }
