@@ -127,8 +127,6 @@ class RegisterScreen extends Component{
                     </Select>
                 </FormControl>
 
-
-
                 <p/>
                 <Button variant="contained" color="primary" onClick={() =>{
                     this.onRegister();
