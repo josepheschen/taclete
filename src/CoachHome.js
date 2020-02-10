@@ -45,17 +45,6 @@ class CoachHome extends Component {
         )
     }
 
-    useStyles = makeStyles(theme => ({
-        container: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-    }));
-
     workoutChange=(e)=>{
         this.setState({
             workout: e.target.value,
@@ -82,8 +71,7 @@ class CoachHome extends Component {
 
         return (
             <div>
-                <h2>{this.Group} </h2>
-                <p> {this.state.workout}</p>
+                <p>{this.state.workout}</p>
                 <Button onClick={handleClickOpen} color="#274f7a" variant="contained"
                         style={{maxWidth: '150px', maxHeight: '50px', minWidth: '150px', minHeight: '50px'}}>
                     New Workout

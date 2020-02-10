@@ -7,7 +7,6 @@ function App() {
   return (
     <div className="App" id="banner">
       <header className="App-header">
-        <h1> TACLETE </h1>
 
         <BaseScreen />
       </header>

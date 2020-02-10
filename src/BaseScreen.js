@@ -4,6 +4,8 @@ import RegisterScreen from './RegisterScreen';
 import Snackbar from './Snackbar';
 import AthleteHome from './AthleteHome.js'
 import CoachHome from "./CoachHome.js";
+import TacleteIconBlue from './Taclete_Icon_Blue.png';
+import TacleteWordmarkBlue from "./Taclete_Wordmark_Blue.png";
 
 
 class BaseScreen extends Component {
@@ -56,7 +58,7 @@ class BaseScreen extends Component {
     };
 
     snackbarRef = React.createRef();
-    handleRegister = (userType) => {
+    handleRegister = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
 
@@ -82,10 +84,10 @@ class BaseScreen extends Component {
     };
 
     render() {
-
         if (this.state.LOGIN) {
             return (
                 <div>
+                    <img src={TacleteWordmarkBlue} alt="TacleteWordmark"/>
                     <LoginScreen
                         handleEmailChange={this.handleEmailChange}
                         handlePasswordChange={this.handlePasswordChange}
@@ -97,6 +99,7 @@ class BaseScreen extends Component {
         } else if (this.state.ROTC || this.state.CADRE || this.state.HES) {
             return (
               <div>
+                  <img src={TacleteIconBlue} alt="BlueTacleteIcon"/>
                   <CoachHome
 
                   />
@@ -105,6 +108,7 @@ class BaseScreen extends Component {
         } else if (this.state.CADET) {
             return (
                 <div>
+                    <img src={TacleteIconBlue} alt="BlueTacleteIcon"/>
                     <AthleteHome
 
                     />
@@ -113,6 +117,7 @@ class BaseScreen extends Component {
         } else if (this.state.REGISTER) {
             return (
                 <div>
+                    <img src={TacleteWordmarkBlue} alt="TacleteWordmark"/>
                     <RegisterScreen
                         handleEmailChange={this.handleEmailChange}
                         handlePasswordChange={this.handlePasswordChange}
