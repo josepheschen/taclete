@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen.js';
 import RegisterScreen from './RegisterScreen';
-import Snackbar from './Snackbar';
 import AthleteHome from './AthleteHome.js'
 import CoachHome from "./CoachHome.js";
 import TacleteIconBlue from './Taclete_Icon_Blue.png';
 import TacleteWordmarkBlue from "./Taclete_Wordmark_Blue.png";
+import IconButton from "@material-ui/core/IconButton";
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 class BaseScreen extends Component {
@@ -22,7 +24,8 @@ class BaseScreen extends Component {
             HES: false,
             CADET: false,
             REGISTER: false,
-            showPopUp: false,
+            snackbarOpen: false,
+            snackbarMessage: 'Message Error'
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -57,7 +60,6 @@ class BaseScreen extends Component {
         }
     };
 
-    snackbarRef = React.createRef();
     handleRegister = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
@@ -67,7 +69,7 @@ class BaseScreen extends Component {
             // this.userType = true;
             LOGIN: true
         });
-        this.snackbarRef.current.openSnackBar('Account created successfuly.')
+        this.setState({snackbarMessage: 'Account created successfully.', snackbarOpen: true});
     };
 
 
@@ -93,6 +95,23 @@ class BaseScreen extends Component {
                         handlePasswordChange={this.handlePasswordChange}
                         handleSubmit={this.handleSubmit}
                         registerButton={this.registerButton}
+                    />
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'middle',
+                        }}
+                        open={this.state.snackbarOpen}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        message={this.state.snackbarMessage}
+                        action={
+                            <React.Fragment>
+                                <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                                    <CloseIcon fontSize="small" />
+                                </IconButton>
+                            </React.Fragment>
+                        }
                     />
                 </div>
             );
