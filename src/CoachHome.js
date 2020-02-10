@@ -11,6 +11,12 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 class CoachHome extends Component {
 
@@ -85,7 +91,7 @@ class CoachHome extends Component {
                 <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open} onClose={handleClose}>
                     <DialogTitle>Make a new workout</DialogTitle>
                     <DialogContent>
-                        <TextField
+                        <p><TextField
                             id="outlined-multiline-static"
                             label="Describe Workout"
                             multiline
@@ -93,7 +99,8 @@ class CoachHome extends Component {
                             defaultValue={this.state.workout}
                             variant="outlined"
                             onChange={this.workoutChange}
-                        />
+                        /></p>
+                        {this.MaterialUIPickers()}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">
@@ -105,6 +112,30 @@ class CoachHome extends Component {
                     </DialogActions>
                 </Dialog>
             </div>
+        );
+    }
+
+    handleDateChange = date => {
+        this.setState({selectedDate: date});
+    };
+    MaterialUIPickers() {
+        // The first commit of Material-UI
+        return (
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Workout Date"
+                    value={this.state.selectedDate}
+                    onChange={this.handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                />
+            </MuiPickersUtilsProvider>
         );
     }
 } export default CoachHome
