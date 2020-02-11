@@ -41,13 +41,13 @@ class AthleteHome extends Component{
             this.setState({
                 workoutOpen: true
             })
-        }
+        };
 
         closeWorkout = () => {
             this.setState({
                 workoutOpen: false
             })
-        }
+        };
 
         render() {
             if(this.state.Group === 'A') {

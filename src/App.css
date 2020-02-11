@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  background-color: #FAFCFD;
+  color: #274f7a;
+}
+
+body {
+  background-color: #FAFCFD;
+  color: #274f7a;
+  padding: 40px;
+  font-family: Arial;
+  text-align: center;
 }
 
 .App-tacleteLogo {

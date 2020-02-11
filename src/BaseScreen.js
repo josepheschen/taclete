@@ -8,7 +8,7 @@ import TacleteWordmarkBlue from "./Taclete_Wordmark_Blue.png";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { createMuiTheme } from '@material-ui/core/styles';
 
 class BaseScreen extends Component {
     constructor(props) {
@@ -33,6 +33,17 @@ class BaseScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.registerButton=this.registerButton.bind(this);
     }
+
+    theme = createMuiTheme({
+        palette: {
+            primary: {
+                light: '#FAFCFD',
+                main: '#274F7A',
+                dark: '#030f17',
+                contrastText: '#e61e26',
+            },
+        },
+    });
 
     handleEmailChange = (value) => {
         this.setState({
@@ -70,6 +81,12 @@ class BaseScreen extends Component {
             LOGIN: true
         });
         this.setState({snackbarMessage: 'Account created successfully.', snackbarOpen: true});
+    };
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({snackbarOpen: false})
     };
 
 
@@ -142,7 +159,6 @@ class BaseScreen extends Component {
                         handlePasswordChange={this.handlePasswordChange}
                         handleRegister={this.handleRegister}
                     />
-                    <Snackbar ref = {this.snackbarRef} />
                 </div>
             );
         }
