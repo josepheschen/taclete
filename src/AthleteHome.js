@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import TextField from "@material-ui/core/TextField";
+import DateFnsUtils from '@date-io/date-fns';
+// import MomentUtils from '@date-io/moment';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import CoachHome from "./CoachHome";
+// import { makeStyles } from '@material-ui/core/styles';
+// import CardContent from '@material-ui/core/CardContent';
 
 class AthleteHome extends Component{
         constructor(props) {
             super(props);
+            this.CoachWorkout = new CoachHome();
             this.state = {
                 Group: 'A',
-                WorkoutA: "Mom Workout",
+                WorkoutA: "Workout A",
                 WorkoutB: "Workout B",
                 WorkoutC: "Workout C",
                 Exercise1A: "Bredan's Mom",
@@ -18,6 +28,7 @@ class AthleteHome extends Component{
                 reps2A: '',
                 time2A: '',
                 weight2A: '',
+                selectedDate: null
             }
         }
 
@@ -62,73 +73,26 @@ class AthleteHome extends Component{
             this.render()
         };
 
+
         space = '           ';
         render() {
             if(this.state.Group === 'A') {
                 return (
                     <div>
-                        <h3>{this.state.WorkoutA}</h3>
+                        <h3>Workout: </h3>
                         <p>
-                            {this.state.Exercise1A}:  {this.space}
+                            <small>{this.CoachWorkout.getWorkout()}</small>
+                            {this.space}
                             <TextField
-                                name="reps"
+                                id="outlined-multiline-static"
+                                label="Describe Results"
+                                multiline
+                                rows="4"
+                                defaultValue=""
                                 variant="outlined"
-                                label="Reps"
-                                type="text"
-                                value={this.state.reps1A}
-                                onChange={this.handleRepsChange1A}
-                            />
-
-                            <TextField
-                                name="weight"
-                                variant="outlined"
-                                label="Weight"
-                                type="text"
-                                value={this.state.weight1A}
-                                onChange={this.handleWeightChange1A}
-                            />
-
-                            <TextField
-                                name="time"
-                                variant="outlined"
-                                label="Time"
-                                type="text"
-                                value={this.state.time1A}
-                                onChange={this.handleTimeChange1A}
+                                onChange={this.workoutChange}
                             />
                         </p>
-
-                        <p>
-                            {this.state.Exercise2A}:  {this.space}
-                            <TextField
-                                name="reps"
-                                variant="outlined"
-                                label="Reps"
-                                type="text"
-                                value={this.state.reps2A}
-                                onChange={this.handleRepsChange2A}
-                            />
-
-                            <TextField
-                                name="weight"
-                                variant="outlined"
-                                label="Weight"
-                                type="text"
-                                value={this.state.weight2A}
-                                onChange={this.handleWeightChange2A}
-                            />
-
-                            <TextField
-                                name="time"
-                                variant="outlined"
-                                label="Time"
-                                type="text"
-                                value={this.state.time2A}
-                                onChange={this.handleTimeChange2A}
-                            />
-                        </p>
-
-                        Put Leaderboard Here
                     </div>
                 )
             }
@@ -156,4 +120,29 @@ class AthleteHome extends Component{
                )
             }
         }
+
+
+    handleDateChange = date => {
+       this.setState({selectedDate: date});
+    };
+        MaterialUIPickers() {
+        // The first commit of Material-UI
+        return (
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="MM/dd/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Date picker inline"
+                        value={this.state.selectedDate}
+                        onChange={this.handleDateChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+            </MuiPickersUtilsProvider>
+        );
+    }
 } export default AthleteHome
