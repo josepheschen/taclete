@@ -1,13 +1,19 @@
 .App {
   text-align: center;
+  background-color: #FAFCFD;
+  color: #274f7a;
 }
 
-.App-rotcLogo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #FAFCFD;
+  color: #274f7a;
+  padding: 40px;
+  font-family: Arial;
+  text-align: center;
 }
-.App-csuLogo {
-  height: 15vmin;
+
+.App-tacleteLogo {
+  height: 40vmin;
   pointer-events: none;
 }
 

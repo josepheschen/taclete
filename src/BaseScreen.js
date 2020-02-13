@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import LoginScreen from './LoginScreen.js';
 import RegisterScreen from './RegisterScreen';
-import Snackbar from './Snackbar';
 import AthleteHome from './AthleteHome.js'
 import CoachHome from "./CoachHome.js";
-
+import TacleteIconBlue from './Taclete_Icon_Blue.png';
+import TacleteWordmarkBlue from "./Taclete_Wordmark_Blue.png";
+import IconButton from "@material-ui/core/IconButton";
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 class BaseScreen extends Component {
     constructor(props) {
@@ -20,7 +24,8 @@ class BaseScreen extends Component {
             HES: false,
             CADET: false,
             REGISTER: false,
-            showPopUp: false,
+            snackbarOpen: false,
+            snackbarMessage: 'Message Error'
         };
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -28,6 +33,17 @@ class BaseScreen extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.registerButton=this.registerButton.bind(this);
     }
+
+    theme = createMuiTheme({
+        palette: {
+            primary: {
+                light: '#FAFCFD',
+                main: '#274F7A',
+                dark: '#030f17',
+                contrastText: '#e61e26',
+            },
+        },
+    });
 
     handleEmailChange = (value) => {
         this.setState({
@@ -55,8 +71,7 @@ class BaseScreen extends Component {
         }
     };
 
-    snackbarRef = React.createRef();
-    handleRegister = (userType) => {
+    handleRegister = () => {
         console.log("Email: " + this.state.email);
         console.log("Password: " + this.state.password);
 
@@ -65,7 +80,13 @@ class BaseScreen extends Component {
             // this.userType = true;
             LOGIN: true
         });
-        this.snackbarRef.current.openSnackBar('Account created successfuly.')
+        this.setState({snackbarMessage: 'Account created successfully.', snackbarOpen: true});
+    };
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({snackbarOpen: false})
     };
 
 
@@ -82,21 +103,39 @@ class BaseScreen extends Component {
     };
 
     render() {
-
         if (this.state.LOGIN) {
             return (
                 <div>
+                    <img src={TacleteWordmarkBlue} alt="TacleteWordmark"/>
                     <LoginScreen
                         handleEmailChange={this.handleEmailChange}
                         handlePasswordChange={this.handlePasswordChange}
                         handleSubmit={this.handleSubmit}
                         registerButton={this.registerButton}
                     />
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'middle',
+                        }}
+                        open={this.state.snackbarOpen}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        message={this.state.snackbarMessage}
+                        action={
+                            <React.Fragment>
+                                <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                                    <CloseIcon fontSize="small" />
+                                </IconButton>
+                            </React.Fragment>
+                        }
+                    />
                 </div>
             );
         } else if (this.state.ROTC || this.state.CADRE || this.state.HES) {
             return (
               <div>
+                  <img src={TacleteIconBlue} alt="BlueTacleteIcon"/>
                   <CoachHome
 
                   />
@@ -105,6 +144,7 @@ class BaseScreen extends Component {
         } else if (this.state.CADET) {
             return (
                 <div>
+                    <img src={TacleteIconBlue} alt="BlueTacleteIcon"/>
                     <AthleteHome
 
                     />
@@ -113,12 +153,12 @@ class BaseScreen extends Component {
         } else if (this.state.REGISTER) {
             return (
                 <div>
+                    <img src={TacleteWordmarkBlue} alt="TacleteWordmark"/>
                     <RegisterScreen
                         handleEmailChange={this.handleEmailChange}
                         handlePasswordChange={this.handlePasswordChange}
                         handleRegister={this.handleRegister}
                     />
-                    <Snackbar ref = {this.snackbarRef} />
                 </div>
             );
         }
