@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
 import TextField from "@material-ui/core/TextField";
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+// import MomentUtils from '@date-io/moment';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import CoachHome from "./CoachHome";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+// import { makeStyles } from '@material-ui/core/styles';
+// import CardContent from '@material-ui/core/CardContent';
 
 class AthleteHome extends Component{
         constructor(props) {
             super(props);
+            this.CoachWorkout = new CoachHome();
             this.state = {
                 Group: 'A',
-                WorkoutA: "Mom Workout",
+                WorkoutA: "Workout A",
                 WorkoutB: "Workout B",
                 WorkoutC: "Workout C",
                 Exercise1A: "Bredan's Mom",
@@ -18,117 +35,75 @@ class AthleteHome extends Component{
                 reps2A: '',
                 time2A: '',
                 weight2A: '',
+                selectedDate: null,
+                workoutOpen: false,
             }
         }
 
-        handleRepsChange1A = (e) =>{
+        openWorkout = () => {
             this.setState({
-                reps1A: e.target.value,
-            });
-            this.render()
+                workoutOpen: true
+            })
         };
 
-        handleWeightChange1A = (e) =>{
+        closeWorkout = () => {
             this.setState({
-                weight1A: e.target.value,
-            });
-            this.render()
+                workoutOpen: false
+            })
         };
 
-        handleTimeChange1A = (e) =>{
-            this.setState({
-                time1A: e.target.value,
-            });
-            this.render()
-        };
-        handleRepsChange2A = (e) =>{
-            this.setState({
-                reps2A: e.target.value,
-            });
-            this.render()
-        };
-
-        handleWeightChange2A = (e) =>{
-            this.setState({
-                weight2A: e.target.value,
-            });
-            this.render()
-        };
-
-        handleTimeChange2A = (e) =>{
-            this.setState({
-                time2A: e.target.value,
-            });
-            this.render()
-        };
-
-        space = '           ';
         render() {
             if(this.state.Group === 'A') {
                 return (
                     <div>
-                        <h3>{this.state.WorkoutA}</h3>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                disableToolbar
+                                variant="inline"
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Date"
+                                value={this.state.selectedDate}
+                                onChange={this.handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
                         <p>
-                            {this.state.Exercise1A}:  {this.space}
-                            <TextField
-                                name="reps"
-                                variant="outlined"
-                                label="Reps"
-                                type="text"
-                                value={this.state.reps1A}
-                                onChange={this.handleRepsChange1A}
-                            />
+                        <Button variant="outlined" color="primary" onClick={this.openWorkout}>
+                            Open Active Workout
+                        </Button>
+                        <Dialog
+                            open={this.state.workoutOpen}
+                            onClose={this.closeWorkout}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Current Workout"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {this.CoachWorkout.getWorkout()}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.closeWorkout} color="primary">
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
                             <TextField
-                                name="weight"
+                                id="outlined-multiline-static"
+                                label="Describe Results"
+                                multiline
+                                rows="4"
+                                defaultValue=""
                                 variant="outlined"
-                                label="Weight"
-                                type="text"
-                                value={this.state.weight1A}
-                                onChange={this.handleWeightChange1A}
-                            />
-
-                            <TextField
-                                name="time"
-                                variant="outlined"
-                                label="Time"
-                                type="text"
-                                value={this.state.time1A}
-                                onChange={this.handleTimeChange1A}
+                                onChange={this.workoutChange}
                             />
                         </p>
-
-                        <p>
-                            {this.state.Exercise2A}:  {this.space}
-                            <TextField
-                                name="reps"
-                                variant="outlined"
-                                label="Reps"
-                                type="text"
-                                value={this.state.reps2A}
-                                onChange={this.handleRepsChange2A}
-                            />
-
-                            <TextField
-                                name="weight"
-                                variant="outlined"
-                                label="Weight"
-                                type="text"
-                                value={this.state.weight2A}
-                                onChange={this.handleWeightChange2A}
-                            />
-
-                            <TextField
-                                name="time"
-                                variant="outlined"
-                                label="Time"
-                                type="text"
-                                value={this.state.time2A}
-                                onChange={this.handleTimeChange2A}
-                            />
-                        </p>
-
-                        Put Leaderboard Here
                     </div>
                 )
             }
@@ -156,4 +131,7 @@ class AthleteHome extends Component{
                )
             }
         }
+        handleDateChange = date => {
+           this.setState({selectedDate: date});
+        };
 } export default AthleteHome

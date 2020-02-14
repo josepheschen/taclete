@@ -6,7 +6,9 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from "@material-ui/core/InputLabel";
-import Snackbar from './Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 class RegisterScreen extends Component{
 
@@ -16,6 +18,8 @@ class RegisterScreen extends Component{
             email: '',
             password: '',
             confirmPassword: '',
+            snackbarOpen: false,
+            snackbarMessage: "Message Error"
         };
 
         this.onEmailChange = this.onEmailChange.bind(this);
@@ -62,16 +66,16 @@ class RegisterScreen extends Component{
             this.props.handleRegister();
         }
         else if(this.state.email === ''){
-            this.snackbarRef.current.openSnackBar('You must input an email.')
+            this.setState({snackbarMessage: "You must input an email.", snackbarOpen: true});
         }
         else if(this.state.password === ''){
-            this.snackbarRef.current.openSnackBar('You must input a password.')
+            this.setState({snackbarMessage: "You must input a password.", snackbarOpen: true});
         }
         else if(this.state.confirmPassword !== this.state.password){
-            this.snackbarRef.current.openSnackBar('Passwords do not match.')
+            this.setState({snackbarMessage: "Your passwords must match.", snackbarOpen: true});
         }
         else{
-            this.snackbarRef.current.openSnackBar('Unexpected error.')
+            this.setState({snackbarMessage: "Unexpected Error.", snackbarOpen: true});
         }
     };
 
@@ -126,16 +130,41 @@ class RegisterScreen extends Component{
                         <MenuItem value={'ROTC'}>ROTC</MenuItem>
                     </Select>
                 </FormControl>
-
                 <p/>
                 <Button variant="contained" color="primary" onClick={() =>{
                     this.onRegister();
+                    this.handleClick()
                 }}> Submit </Button>
-                <Snackbar ref = {this.snackbarRef} />
                 <p/>
-
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'middle',
+                    }}
+                    open={this.state.snackbarOpen}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    message={this.state.snackbarMessage}
+                    action={
+                        <React.Fragment>
+                            <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        </React.Fragment>
+                    }
+                />
             </form>
             </div>
             );
     }
+
+    handleClick = () => {
+        this.setState({snackbarOpen: true})
+    };
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({snackbarOpen: false})
+    };
 } export default RegisterScreen;
