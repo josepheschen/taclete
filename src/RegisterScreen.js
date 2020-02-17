@@ -60,7 +60,6 @@ class RegisterScreen extends Component{
         }, this.props.handlePasswordChange(e.target.value));
     };
 
-    snackbarRef = React.createRef();
     onRegister = () => {
         if (this.state.confirmPassword === this.state.password && this.state.password !== '' && this.state.email !== '') {
             this.props.handleRegister();
