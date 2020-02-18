@@ -4,13 +4,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 const publicPath = path.join(__dirname, '..', 'public');
 
-
 app.use(express.static(publicPath));
 // app.use(express.static('../build'));
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
+app.get('*' , function(req, res) {
+    // res.sendFile(path.join(publicPath, 'index.html'));
+    res.sendFile('index.html',{ root:__dirname })
 });
 
 app.listen(port, () => {
