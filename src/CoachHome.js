@@ -11,44 +11,69 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import Input from '@material-ui/core/Input';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
+
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import ExerciseTable from "./ExerciseTable";
 
 class CoachHome extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            Group: "A",
+            group: "HES",
             setOpen: false,
             open: false,
             age: '',
             setAge: '',
-            workout: "Blank Workout",
-        }
-    }
+            selectedDate: null,
+            comments: "",
+            exTable: new ExerciseTable()
+        };
+    };
 
     getWorkout= () => {
-        return(this.state.workout)
+        return(this.state.exTable)
     };
 
     render() {
         return(
             <div>
-                {this.state.Group}
+                <p><FormControl style={{minWidth: 120}}>
+                    <InputLabel id="accountTypeSelectLabel">Group</InputLabel>
+                    <Select
+                        labelId="accountTypeSelectLabel"
+                        id="accountTypeSelect"
+                        value={this.state.group}
+                        onChange={this.onGroupChange}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={'HES'}>HES</MenuItem>
+                        <MenuItem value={'CADRE'}>CADRE</MenuItem>
+                        <MenuItem value={'ROTC'}>ROTC</MenuItem>
+                    </Select>
+                </FormControl></p>
                 {this.DialogSelect()}
             </div>
         )
     }
 
-    workoutChange=(e)=>{
+    onGroupChange=(e)=>{
         this.setState({
-            workout: e.target.value,
+            group: e.target.value,
         })
     };
+
+    commentChange=(e)=>{
+        this.setState({
+            comments: e.target.value,
+        })
+    };
+
 
     DialogSelect() {
         const handleClickOpen = () => {
@@ -65,31 +90,48 @@ class CoachHome extends Component {
 
         return (
             <div>
-                <p>{this.state.workout}</p>
-                <Button onClick={handleClickOpen} color="#274f7a" variant="contained"
+                <Button onClick={handleClickOpen}
                         style={{maxWidth: '150px', maxHeight: '50px', minWidth: '150px', minHeight: '50px'}}>
                     New Workout
                 </Button>
                 <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open} onClose={handleClose}>
                     <DialogTitle>Make a new workout</DialogTitle>
                     <DialogContent>
-                        <p><TextField
-                            id="outlined-multiline-static"
-                            label="Describe Workout"
-                            multiline
-                            rows="4"
-                            defaultValue={this.state.workout}
-                            variant="outlined"
-                            onChange={this.workoutChange}
-                        /></p>
-                        {this.MaterialUIPickers()}
+                        <p>{this.DatePicker()}</p>
+                        {this.state.exTable.render()}
+                        <Button onClick={()=>{
+                        this.state.exTable.addExercise();
+                        this.setState({});
+                        }} color="primary">
+                            Add Exercise
+                        </Button>
+                        <TextField
+                            name = "comments"
+                            variant = "outlined"
+                            label = "Comments"
+                            type = "text"
+                            style={{minWidth: 525}}
+                            value={this.state.comments}
+                            onChange={this.commentChange}
+                        />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={()=>{
+                            handleClose();
+                            this.setState({
+                                exTable: new ExerciseTable()
+                            })
+                        }} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleClose} color="primary">
-                            Ok
+                        <Button onClick={()=>{
+                            handleClose();
+                            console.log(this.state.exTable.toString());
+                            this.setState({
+                                exTable: new ExerciseTable()
+                            });
+                        }} color="primary">
+                            Submit
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -100,7 +142,7 @@ class CoachHome extends Component {
     handleDateChange = date => {
         this.setState({selectedDate: date});
     };
-    MaterialUIPickers() {
+    DatePicker() {
         // The first commit of Material-UI
         return (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
