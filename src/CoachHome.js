@@ -125,9 +125,10 @@ class CoachHome extends Component {
                         </Button>
                         <Button onClick={()=>{
                             handleClose();
+                            console.log(this.state.exTable.toString());
                             this.setState({
                                 exTable: new ExerciseTable()
-                            })
+                            });
                         }} color="primary">
                             Submit
                         </Button>

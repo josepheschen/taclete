@@ -14,11 +14,19 @@ class ExerciseTable extends Component{
     render=()=>{
         return (
             <div>
-                    {this.state.exerciseList.map((ex, ) => (
-                            <p>{ex.render()}</p>
-                    ))}
+                {this.state.exerciseList.map((ex, ) => (
+                    <p>{ex.render()}</p>
+                ))}
             </div>
         );
+    };
+
+    toString=()=>{
+        let exTableString = "";
+        this.state.exerciseList.map((ex, ) => (
+            ex.render()
+        ));
+        return (exTableString);
     };
 
     addExercise =()=> {

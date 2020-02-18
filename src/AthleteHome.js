@@ -7,6 +7,7 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import CoachHome from "./CoachHome";
+import WorkoutDisplay from "./WorkoutDisplay.js"
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -34,6 +35,7 @@ class AthleteHome extends Component{
                 weight2A: '',
                 selectedDate: null,
                 workoutOpen: false,
+                workoutDisplay: new WorkoutDisplay()
             }
         }
 
@@ -68,39 +70,7 @@ class AthleteHome extends Component{
                                 }}
                             />
                         </MuiPickersUtilsProvider>
-                        <p>
-                        <Button variant="outlined" color="primary" onClick={this.openWorkout}>
-                            Open Active Workout
-                        </Button>
-                        <Dialog
-                            open={this.state.workoutOpen}
-                            onClose={this.closeWorkout}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                        >
-                            <DialogTitle id="alert-dialog-title">{"Current Workout"}</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    {this.CoachWorkout.getWorkout()}
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={this.closeWorkout} color="primary">
-                                    Close
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-
-                            <TextField
-                                id="outlined-multiline-static"
-                                label="Describe Results"
-                                multiline
-                                rows="4"
-                                defaultValue=""
-                                variant="outlined"
-                                onChange={this.workoutChange}
-                            />
-                        </p>
+                        {this.state.workoutDisplay.render()}
                     </div>
                 )
             }
