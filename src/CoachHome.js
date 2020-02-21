@@ -29,7 +29,8 @@ class CoachHome extends Component {
             open: false,
             comments: "No Comments",
             numExercises: 0,
-            exerciseList: [new ExerciseModule(props, 0)],
+            exerciseList: [new ExerciseModule(props)],
+            key: 0,
             //exTable: new ExerciseTable(this.props)
         };
         this.handleWorkoutChange = this.handleWorkoutChange.bind(this);
@@ -101,13 +102,14 @@ class CoachHome extends Component {
                     <DialogTitle>Make a new workout</DialogTitle>
                     <DialogContent>
                         {this.DatePicker()}
-                        <br/>
+                        <br/> <br/>
                         {this.state.exerciseList.map((ex, index) => (
                             <ExerciseModule
                                     handleWorkoutChange={this.handleWorkoutChange}
                                     handleRepsChange={this.handleRepsChange}
                                     handleWeightChange={this.handleWeightChange}
                                     key={index}
+                                    index={index}
                             />
                         ))}
 

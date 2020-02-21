@@ -5,14 +5,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 
-class exerciseModule extends Component{
+class ExerciseModule extends Component{
     constructor(props) {
         super(props);
         this.state = {
             name: 'Rest',
             e1var1: '0',
             e1var2: '0',
-            key: props.key,
         };
         this.workoutChange = this.workoutChange.bind(this);
         this.repsChange = this.repsChange.bind(this);
@@ -22,20 +21,20 @@ class exerciseModule extends Component{
     workoutChange=(e)=>{
         this.setState({
             name: e.target.value,
-        }, this.props.handleWorkoutChange(e, this.state.key));
+        }, this.props.handleWorkoutChange(e, this.props.index));
 
     };
 
     repsChange=(e)=>{
         this.setState({
             e1var1: e.target.value,
-        }, this.props.handleRepsChange(e, this.state.key));
+        }, this.props.handleRepsChange(e, this.props.index));
     };
 
     weightChange=(e)=>{
         this.setState({
             e1var2: e.target.value,
-        }, this.props.handleWeightChange(e, this.state.key));
+        }, this.props.handleWeightChange(e, this.props.index));
     };
 
     toString = () => {
@@ -205,4 +204,4 @@ class exerciseModule extends Component{
 
         )
     }
-}export default exerciseModule;
+}export default ExerciseModule;
