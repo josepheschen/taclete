@@ -16,6 +16,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import ExerciseTable from "./ExerciseTable";
+import ExerciseModule from "./ExerciseModule";
 
 class CoachHome extends Component {
 
@@ -25,12 +26,14 @@ class CoachHome extends Component {
             group: "HES",
             setOpen: false,
             open: false,
-            age: '',
-            setAge: '',
-            selectedDate: null,
-            comments: "",
-            exTable: new ExerciseTable()
+            comments: "No Comments",
+            numExercises: 0,
+            exerciseList: [new ExerciseModule(props, 0)],
+            //exTable: new ExerciseTable(this.props)
         };
+        this.handleWorkoutChange = this.handleWorkoutChange.bind(this);
+        this.handleRepsChange = this.handleRepsChange.bind(this);
+        this.handleWeightChange = this.handleWeightChange.bind(this);
     };
 
     getWorkout= () => {
@@ -40,7 +43,7 @@ class CoachHome extends Component {
     render() {
         return(
             <div>
-                <p><FormControl style={{minWidth: 120}}>
+                <FormControl style={{minWidth: 120}}>
                     <InputLabel id="accountTypeSelectLabel">Group</InputLabel>
                     <Select
                         labelId="accountTypeSelectLabel"
@@ -55,7 +58,7 @@ class CoachHome extends Component {
                         <MenuItem value={'CADRE'}>CADRE</MenuItem>
                         <MenuItem value={'ROTC'}>ROTC</MenuItem>
                     </Select>
-                </FormControl></p>
+                </FormControl>
                 {this.DialogSelect()}
             </div>
         )
@@ -96,14 +99,24 @@ class CoachHome extends Component {
                 <Dialog disableBackdropClick disableEscapeKeyDown open={this.state.open} onClose={handleClose}>
                     <DialogTitle>Make a new workout</DialogTitle>
                     <DialogContent>
-                        <p>{this.DatePicker()}</p>
-                        {this.state.exTable.render()}
+                        {this.DatePicker()}
+                        <br/>
+                        {this.state.exerciseList.map((ex, index) => (
+                            <ExerciseModule
+                                    handleWorkoutChange={this.handleWorkoutChange}
+                                    handleRepsChange={this.handleRepsChange}
+                                    handleWeightChange={this.handleWeightChange}
+                                    key={index}
+                            />
+                        ))}
+
                         <Button onClick={()=>{
-                        this.state.exTable.addExercise();
+                        this.addExercise();
                         this.setState({});
                         }} color="primary">
                             Add Exercise
                         </Button>
+
                         <TextField
                             name = "comments"
                             variant = "outlined"
@@ -113,6 +126,7 @@ class CoachHome extends Component {
                             value={this.state.comments}
                             onChange={this.commentChange}
                         />
+
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={()=>{
@@ -125,10 +139,10 @@ class CoachHome extends Component {
                         </Button>
                         <Button onClick={()=>{
                             handleClose();
-                            console.log(this.state.exTable.toString());
-                            this.setState({
-                                exTable: new ExerciseTable()
-                            });
+                            console.log(this.tableToString() + this.state.comments);
+                            {this.setState({
+                                exerciseList: [new ExerciseModule(this.props, 0)]
+                            });}
                         }} color="primary">
                             Submit
                         </Button>
@@ -137,6 +151,35 @@ class CoachHome extends Component {
             </div>
         );
     }
+
+    tableToString=()=>{
+        let exTableString = "";
+        this.state.exerciseList.map((ex, ) => (
+            exTableString = exTableString + ex.toString() + "; "
+        ));
+        return (exTableString);
+    };
+
+    addExercise =()=> {
+        let exerciseList = this.state.exerciseList;
+        exerciseList.push(new ExerciseModule(this.props, this.state.numExercises));
+        this.setState({
+            exerciseList: exerciseList,
+            numExercises: this.state.numExercises + 1
+        })
+    };
+
+    handleWorkoutChange = (e, key) =>{
+        console.log(this.state.exerciseList[key])
+    };
+
+    handleRepsChange = (value, key) =>{
+
+    };
+
+    handleWeightChange = (value, key) =>{
+
+    };
 
     handleDateChange = date => {
         this.setState({selectedDate: date});

@@ -8,12 +8,6 @@ import {
 } from '@material-ui/pickers';
 import CoachHome from "./CoachHome";
 import WorkoutDisplay from "./WorkoutDisplay.js"
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 class AthleteHome extends Component{
         constructor(props) {
@@ -24,15 +18,6 @@ class AthleteHome extends Component{
                 WorkoutA: "Workout A",
                 WorkoutB: "Workout B",
                 WorkoutC: "Workout C",
-                Exercise1A: "Bredan's Mom",
-                Exercise2A: "Carson's Mom",
-                Exercise3A: "Joe's Mom",
-                reps1A: '',
-                time1A: '',
-                weight1A: '',
-                reps2A: '',
-                time2A: '',
-                weight2A: '',
                 selectedDate: null,
                 workoutOpen: false,
                 workoutDisplay: new WorkoutDisplay()
@@ -99,6 +84,8 @@ class AthleteHome extends Component{
             }
         }
         handleDateChange = date => {
-           this.setState({selectedDate: date});
+           this.setState({
+               selectedDate: date,
+               workoutDisplay: new WorkoutDisplay(date)});
         };
 } export default AthleteHome

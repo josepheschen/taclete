@@ -6,44 +6,55 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 
 class exerciseModule extends Component{
-    constructor(props, key) {
+    constructor(props) {
         super(props);
         this.state = {
-            exercise: null,
             name: 'Rest',
-            e1var1: null,
-            e1var2: null,
-            key: key,
+            e1var1: '0',
+            e1var2: '0',
+            key: props.key,
         };
+        this.workoutChange = this.workoutChange.bind(this);
+        this.repsChange = this.repsChange.bind(this);
+        this.weightChange = this.weightChange.bind(this);
     }
 
     workoutChange=(e)=>{
         this.setState({
             name: e.target.value,
-        })
+        }, this.props.handleWorkoutChange(e, this.state.key));
+
     };
 
     repsChange=(e)=>{
         this.setState({
             e1var1: e.target.value,
-        })
+        }, this.props.handleRepsChange(e, this.state.key));
     };
 
     weightChange=(e)=>{
         this.setState({
             e1var2: e.target.value,
-        })
+        }, this.props.handleWeightChange(e, this.state.key));
+    };
+
+    toString = () => {
+      return (
+          this.state.name + ", Reps/Time: " +
+          this.state.e1var1 + ", Weight/Distance: " +
+          this.state.e1var2
+      )
     };
 
     render(){
         return(
-        <p>
+            <div>
             <FormControl style={{minWidth: 120}}>
                 <InputLabel id="accountTypeSelectLabel">Exercise</InputLabel>
                 <Select
                     labelId="accountTypeSelectLabel"
                     id="accountTypeSelect"
-                    value={this.state.Name}
+                    value={this.state.name}
                     onChange={this.workoutChange}
                 >
                     <MenuItem value="">
@@ -174,23 +185,24 @@ class exerciseModule extends Component{
                     <MenuItem value={'End Circuit'}>End Circuit</MenuItem>
                 </Select>
             </FormControl>
-            <TextField
-                name="var1"
-                variant="outlined"
-                label="Reps or Time"
-                type="text"
-                value={this.state.e1var1}
-                onChange={this.repsChange}
-            />
-            <TextField
-                name="var1"
-                variant="outlined"
-                label="Weight or Distance"
-                type="text"
-                value={this.state.e1var2}
-                onChange={this.weightChange}
-            />
-        </p>
+                <TextField
+                    name={"var1"}
+                    variant={"outlined"}
+                    label={"Reps or Time"}
+                    type={"text"}
+                    value={this.state.e1var1}
+                    onChange={this.repsChange}
+                />
+                <TextField
+                    name="var1"
+                    variant="outlined"
+                    label="Weight or Distance"
+                    type="text"
+                    value={this.state.e1var2}
+                    onChange={this.weightChange}
+                />
+            </div>
+
         )
     }
 }export default exerciseModule;

@@ -1,21 +1,27 @@
 import React, {Component} from "react";
-import {List} from "@material-ui/core";
 import ExerciseModule from "./ExerciseModule"
 
 class ExerciseTable extends Component{
     constructor(props) {
         super(props);
         this.state = ({
-            numExercises: 2,
-            exerciseList: [new ExerciseModule()]
-        })
+            numExercises: 0,
+            exerciseList: []
+        });
     }
 
     render=()=>{
         return (
             <div>
-                {this.state.exerciseList.map((ex, ) => (
-                    <p>{ex.render()}</p>
+                {this.state.exerciseList.map((ex, index) => (
+                    <p>
+                        <ExerciseModule
+                            handleWorkoutChange={this.handleWorkoutChange}
+                            handleRepsChange={this.handleRepsChange}
+                            handleWeightChange={this.handleWeightChange}
+                            key={index}
+                        />
+                    </p>
                 ))}
             </div>
         );
@@ -24,8 +30,8 @@ class ExerciseTable extends Component{
     toString=()=>{
         let exTableString = "";
         this.state.exerciseList.map((ex, ) => (
-            ex.render()
-        ));
+            exTableString = exTableString + ex.toString() + "; "
+    ));
         return (exTableString);
     };
 
@@ -37,4 +43,17 @@ class ExerciseTable extends Component{
             numExercises: this.state.numExercises + 1
         })
     };
+
+    handleWorkoutChange = (e, key) =>{
+            console.log(this.state.exerciseList[key])
+    };
+
+    handleRepsChange = (value, key) =>{
+
+    };
+
+    handleWeightChange = (value, key) =>{
+
+    };
+
 } export default ExerciseTable
