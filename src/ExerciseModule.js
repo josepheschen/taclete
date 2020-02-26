@@ -6,35 +6,35 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 
 class ExerciseModule extends Component{
-    constructor(props) {
+    constructor(props, name, var1, var2) {
         super(props);
         this.state = {
-            name: 'Rest',
-            e1var1: '0',
-            e1var2: '0',
+            name: name || props.name || '',
+            e1var1: var1 || props.var1 || '',
+            e1var2: var2 || props.var2 || '',
         };
-        this.workoutChange = this.workoutChange.bind(this);
-        this.repsChange = this.repsChange.bind(this);
-        this.weightChange = this.weightChange.bind(this);
+        this.workoutChangeBound = this.workoutChange.bind(this);
+        this.repsChangeBound = this.repsChange.bind(this);
+        this.weightChangeBound = this.weightChange.bind(this);
     }
 
     workoutChange=(e)=>{
         this.setState({
             name: e.target.value,
-        }, this.props.handleWorkoutChange(e, this.props.index));
+        }, this.props.handleWorkoutChange(e.target.value, this.props.index));
 
     };
 
     repsChange=(e)=>{
         this.setState({
             e1var1: e.target.value,
-        }, this.props.handleRepsChange(e, this.props.index));
+        }, this.props.handleRepsChange(e.target.value, this.props.index));
     };
 
     weightChange=(e)=>{
         this.setState({
             e1var2: e.target.value,
-        }, this.props.handleWeightChange(e, this.props.index));
+        }, this.props.handleWeightChange(e.target.value, this.props.index));
     };
 
     toString = () => {
@@ -54,7 +54,7 @@ class ExerciseModule extends Component{
                     labelId="accountTypeSelectLabel"
                     id="accountTypeSelect"
                     value={this.state.name}
-                    onChange={this.workoutChange}
+                    onChange={this.workoutChangeBound}
                 >
                     <MenuItem value="">
                         <em>None</em>
@@ -190,7 +190,7 @@ class ExerciseModule extends Component{
                     label={"Reps or Time"}
                     type={"text"}
                     value={this.state.e1var1}
-                    onChange={this.repsChange}
+                    onChange={this.repsChangeBound}
                 />
                 <TextField
                     name="var1"
@@ -198,8 +198,9 @@ class ExerciseModule extends Component{
                     label="Weight or Distance"
                     type="text"
                     value={this.state.e1var2}
-                    onChange={this.weightChange}
+                    onChange={this.weightChangeBound}
                 />
+                <br/>
             </div>
 
         )

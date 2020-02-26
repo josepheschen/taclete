@@ -29,13 +29,12 @@ class CoachHome extends Component {
             open: false,
             comments: "No Comments",
             numExercises: 0,
-            exerciseList: [new ExerciseModule(props)],
+            exerciseList: [],
             key: 0,
-            //exTable: new ExerciseTable(this.props)
         };
-        this.handleWorkoutChange = this.handleWorkoutChange.bind(this);
-        this.handleRepsChange = this.handleRepsChange.bind(this);
-        this.handleWeightChange = this.handleWeightChange.bind(this);
+        this.handleWorkoutChangeBound = this.handleWorkoutChange.bind(this);
+        this.handleRepsChangeBound = this.handleRepsChange.bind(this);
+        this.handleWeightChangeBound = this.handleWeightChange.bind(this);
     };
 
     getWorkout= () => {
@@ -79,6 +78,7 @@ class CoachHome extends Component {
     };
 
 
+    //Pop-Up Window
     DialogSelect() {
         const handleClickOpen = () => {
             this.setState({
@@ -105,19 +105,22 @@ class CoachHome extends Component {
                         <br/> <br/>
                         {this.state.exerciseList.map((ex, index) => (
                             <ExerciseModule
-                                    handleWorkoutChange={this.handleWorkoutChange}
-                                    handleRepsChange={this.handleRepsChange}
-                                    handleWeightChange={this.handleWeightChange}
+                                    handleWorkoutChange={this.handleWorkoutChangeBound}
+                                    handleRepsChange={this.handleRepsChangeBound}
+                                    handleWeightChange={this.handleWeightChangeBound}
                                     key={index}
                                     index={index}
+                                    name={ex.state.name}
+                                    var1={ex.state.e1var1}
+                                    var2={ex.state.e1var2}
                             />
                         ))}
 
                         <Button onClick={()=>{
-                        this.addExercise();
-                        this.setState({});
-                        }} color="primary">
-                            Add Exercise
+                            this.addExercise();
+                            this.setState({});
+                            }} color="primary">
+                                Add Exercise
                         </Button>
 
                         <TextField
@@ -131,6 +134,7 @@ class CoachHome extends Component {
                         />
 
                     </DialogContent>
+
                     <DialogActions>
                         <Button onClick={()=>{
                             handleClose();
@@ -143,9 +147,11 @@ class CoachHome extends Component {
                         <Button onClick={()=>{
                             handleClose();
                             console.log(this.tableToString() + this.state.comments);
-                            {this.setState({
-                                exerciseList: [new ExerciseModule(this.props, 0)]
-                            });}
+                            // {this.setState({
+                            //     exerciseList: [],
+                            //     numExercises: 0,
+                            //     comments: "No Comments"
+                            // });}
                         }} color="primary">
                             Submit
                         </Button>
@@ -157,7 +163,7 @@ class CoachHome extends Component {
 
     tableToString=()=>{
         let exTableString = "";
-        this.state.exerciseList.map((ex, ) => (
+        this.state.exerciseList.map((ex) => (
             exTableString = exTableString + ex.toString() + "; "
         ));
         return (exTableString);
@@ -165,28 +171,45 @@ class CoachHome extends Component {
 
     addExercise =()=> {
         let exerciseList = this.state.exerciseList;
-        exerciseList.push(new ExerciseModule(this.props, this.state.numExercises));
+        exerciseList.push(new ExerciseModule(this.props, 'Rest', '0', '0'));
         this.setState({
             exerciseList: exerciseList,
             numExercises: this.state.numExercises + 1
+        });
+        this.render()
+    };
+
+    handleWorkoutChange = (name, index) =>{
+        console.log(name, index);
+        let exerciseList = this.state.exerciseList;
+        let newEx = exerciseList[index];
+        newEx.setState({
+           name: name,
+        });
+        exerciseList[index] = newEx;
+        this.setState({
+            exerciseList: exerciseList
         })
     };
 
-    handleWorkoutChange = (e, key) =>{
-        console.log(this.state.exerciseList[key])
+    handleRepsChange = (name, index) =>{
+        this.state.exerciseList[index].setState({
+            e1var1: name
+        })
     };
 
-    handleRepsChange = (value, key) =>{
 
+    //Date Handling
+    handleWeightChange = (name, index) =>{
+        this.state.exerciseList[index].setState({
+            e1var2: name
+        })
     };
 
-    handleWeightChange = (value, key) =>{
-
-    };
-
-    handleDateChange = date => {
+    handleDateChange = (date) => {
         this.setState({selectedDate: date});
     };
+
     DatePicker() {
         // The first commit of Material-UI
         return (
