@@ -19,6 +19,7 @@ class LoginScreen extends Component {
         this.onEmailChange = this.onEmailChange.bind(this);
         this.onPasswordChange = this.onPasswordChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.checkLoginInfo = this.checkLoginInfo.bind(this);
     }
 
     useStyles = makeStyles(theme => ({
@@ -47,8 +48,39 @@ class LoginScreen extends Component {
 
     };
 
-    onSubmit = () => {
+    async onSubmit() {
+        try {
+            await this.checkLoginInfo();
+        } catch (err) {
+            console.log(err);
+        }
+
         this.props.handleSubmit();
+    };
+
+    checkLoginInfo = () => {
+
+        return new Promise(resolve => {
+            const { Client } = require('pg');
+            var client = new Client({
+                connectionString: "postgres://imyylnwjvdlelz:93c407e25f4a0a301263237fe459270e8c7363810a34277e2d6a9306761dfb1a@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d3uqsmnmuncomb",
+            });
+
+            try {
+                client.connect();
+
+                client.query('SELECT * FROM athlete;', (err, res) => {
+                    if (err) throw err;
+                    for (let row of res.rows) {
+                        console.log(JSON.stringify(row));
+                    }
+                    client.end();
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        });
+
     };
 
     render() {

@@ -70,6 +70,7 @@ class BaseScreen extends Component {
         });
         this.setState({snackbarMessage: 'Account created successfully.', snackbarOpen: true});
     };
+
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
