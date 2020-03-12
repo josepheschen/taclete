@@ -58,28 +58,51 @@ class LoginScreen extends Component {
         this.props.handleSubmit();
     };
 
-    checkLoginInfo = () => {
+    async checkLoginInfo() {
 
-        return new Promise(resolve => {
-            const { Client } = require('pg');
-            var client = new Client({
-                connectionString: "postgres://imyylnwjvdlelz:93c407e25f4a0a301263237fe459270e8c7363810a34277e2d6a9306761dfb1a@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d3uqsmnmuncomb",
-            });
 
-            try {
-                client.connect();
+        // var parse = require('pg-connection-string').parse;
+        // var config = parse('postgres://imyylnwjvdlelz:93c407e25f4a0a301263237fe459270e8c7363810a34277e2d6a9306761dfb1a@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d3uqsmnmuncomb')
+        //
+        // const { Client } = require('pg');
+        // // const connectionString = 'postgres://imyylnwjvdlelz:93c407e25f4a0a301263237fe459270e8c7363810a34277e2d6a9306761dfb1a@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d3uqsmnmuncomb';
+        //
+        // const client = new Client(config);
+        //
+        // try {
+        //     await client.connect();
+        //
+        //     client.query('SELECT * FROM athlete;', (err, res) => {
+        //         console.log(err, res);
+        //         client.end();
+        //     });
+        //
+        // } catch (err) {
+        //     console.log(err);
+        // }
 
-                client.query('SELECT * FROM athlete;', (err, res) => {
-                    if (err) throw err;
-                    for (let row of res.rows) {
-                        console.log(JSON.stringify(row));
-                    }
-                    client.end();
-                });
-            } catch (err) {
-                console.log(err);
-            }
+
+
+        const { Client } = require('pg');
+        var client = new Client({
+            connectionString: 'postgres://imyylnwjvdlelz:93c407e25f4a0a301263237fe459270e8c7363810a34277e2d6a9306761dfb1a@ec2-52-202-185-87.compute-1.amazonaws.com:5432/d3uqsmnmuncomb',
+            ssl: true,
         });
+
+        try {
+            client.connect();
+
+            client.query('SELECT * FROM athlete;', (err, res) => {
+                if (err) throw err;
+                for (let row of res.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                client.end();
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
 
     };
 
