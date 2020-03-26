@@ -90,9 +90,9 @@ class LoginScreen extends Component {
         });
 
         try {
-            client.connect();
+            await client.connect();
 
-            client.query('SELECT * FROM athlete;', (err, res) => {
+            await client.query('SELECT * FROM athlete;', (err, res) => {
                 if (err) throw err;
                 for (let row of res.rows) {
                     console.log(JSON.stringify(row));
