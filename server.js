@@ -8,9 +8,43 @@ app.use(express.static(publicPath));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "build")));
 
+const { DATABASE_URL } = process.env;
+const { Client } = require('pg');
+
+const config = {
+  connectionString: DATABASE_URL,
+  ssl: true
+};
+var client = new Client(config);
+
+client.connect();
+const queryString = "SELECT * FROM athlete";
+client.query(queryString, (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  res.json(res.rows);
+});
+
 app.get("/ping", function(req, res) {
+  console.log("hello this is a log");
+
   return res.send("pong");
 });
+
+app.get("/try-connection", (req, res) => {
+  const dotenv = require('dotenv');
+  dotenv.config();
+  console.log(DATABASE_URL);
+  const config = {
+    connectionString: DATABASE_URL,
+    ssl: true
+  };
+  var client = new Client(config);
+  client.end();
+});
+
 app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
