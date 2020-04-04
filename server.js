@@ -38,15 +38,18 @@ app.get("/userLoginAttempt", (req, res) => {
     text: 'SELECT * FROM athlete WHERE email = $1 AND password = $2',
     values: [username, password],
   };
+
+  var storedResult;
   
   client.query(query, (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
     }
-    return res;
+    storedResult = res;
   });
-
+  client.end();
+  return storedResult;
 });
 
 app.get("/*", function(req, res) {
