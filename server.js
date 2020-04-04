@@ -36,7 +36,7 @@ app.get("/userLoginAttempt", (req, res) => {
     text: 'SELECT * FROM user WHERE email = $1 && password == $2',
     values: [username, password],
   };
-
+  
   client.query(query, (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
@@ -44,6 +44,7 @@ app.get("/userLoginAttempt", (req, res) => {
     }
     return res;
   });
+
 });
 
 app.get("/*", function(req, res) {
