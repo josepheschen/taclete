@@ -25,7 +25,7 @@ app.get("/ping", function(req, res) {
 
 app.get("/userLoginAttempt", (req, res) => {
 
-  let username = req.headers['username'];
+  let username = req.headers['user'];
   console.log(username);
   let password = req.headers['password'];
   console.log(password);
@@ -35,7 +35,7 @@ app.get("/userLoginAttempt", (req, res) => {
   const query = {
     // give the query a unique name
     name: 'fetch-user',
-    text: 'SELECT * FROM athlete WHERE email = $1 && password == $2',
+    text: 'SELECT * FROM athlete WHERE email = $1 AND password == $2',
     values: [username, password],
   };
   
