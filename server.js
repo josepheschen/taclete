@@ -11,36 +11,39 @@ app.use(express.static(path.join(__dirname, "build")));
 const { DATABASE_URL } = process.env;
 const { Client } = require('pg');
 
+const config = {
+  connectionString: DATABASE_URL,
+  ssl: true
+};
+let client = new Client(config);
+
 app.get("/ping", function(req, res) {
   console.log("hello this is a log");
 
   return res.send("pong");
 });
 
-app.get("/try-connection", (req, res) => {
-  const dotenv = require('dotenv');
-  dotenv.config();
-  console.log(DATABASE_URL);
-  const config = {
-    connectionString: DATABASE_URL,
-    ssl: true
+app.get("/userLoginAttempt", (req, res) => {
+
+  let username = req.headers['username'];
+  let password = req.headers['password'];
+
+  client.connect();
+
+  const query = {
+    // give the query a unique name
+    name: 'fetch-user',
+    text: 'SELECT * FROM user WHERE email = $1 && password == $2',
+    values: [username, password],
   };
-  var client = new Client(config);
-
-  try {
-    client.connect();
-
-    client.query('SELECT * FROM athlete;', (err, res) => {
-      if (err) throw err;
-      for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-      }
-      client.end();
-      return res;
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  
+  client.query(query, (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    return res;
+  });
 
 });
 
