@@ -17,16 +17,6 @@ const config = {
 };
 var client = new Client(config);
 
-client.connect();
-const queryString = "SELECT * FROM athlete";
-client.query(queryString, (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  res.json(res.rows);
-});
-
 app.get("/ping", function(req, res) {
   console.log("hello this is a log");
 
@@ -34,8 +24,6 @@ app.get("/ping", function(req, res) {
 });
 
 app.get("/try-connection", (req, res) => {
-  const dotenv = require('dotenv');
-  dotenv.config();
   console.log(DATABASE_URL);
   const config = {
     connectionString: DATABASE_URL,
@@ -43,6 +31,29 @@ app.get("/try-connection", (req, res) => {
   };
   var client = new Client(config);
   client.end();
+});
+
+app.get("/userLoginAttempt", (req, res) => {
+
+  let username = req.headers['username'];
+  let password = req.headers['password'];
+
+  client.connect();
+
+  const query = {
+    // give the query a unique name
+    name: 'fetch-user',
+    text: 'SELECT * FROM user WHERE email = $1 && password == $2',
+    values: [username, password],
+  };
+
+  client.query(query, (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    return res;
+  });
 });
 
 app.get("/*", function(req, res) {
