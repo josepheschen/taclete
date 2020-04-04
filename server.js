@@ -26,7 +26,9 @@ app.get("/ping", function(req, res) {
 app.get("/userLoginAttempt", (req, res) => {
 
   let username = req.headers['username'];
+  console.log(username);
   let password = req.headers['password'];
+  console.log(password);
 
   client.connect();
 
