@@ -15,22 +15,12 @@ const config = {
   connectionString: DATABASE_URL,
   ssl: true
 };
-var client = new Client(config);
+let client = new Client(config);
 
 app.get("/ping", function(req, res) {
   console.log("hello this is a log");
 
   return res.send("pong");
-});
-
-app.get("/try-connection", (req, res) => {
-  console.log(DATABASE_URL);
-  const config = {
-    connectionString: DATABASE_URL,
-    ssl: true
-  };
-  var client = new Client(config);
-  client.end();
 });
 
 app.get("/userLoginAttempt", (req, res) => {
