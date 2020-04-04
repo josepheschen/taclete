@@ -33,7 +33,7 @@ app.get("/userLoginAttempt", (req, res) => {
   const query = {
     // give the query a unique name
     name: 'fetch-user',
-    text: 'SELECT * FROM user WHERE email = $1 && password == $2',
+    text: 'SELECT * FROM athlete WHERE email = $1 && password == $2',
     values: [username, password],
   };
   
