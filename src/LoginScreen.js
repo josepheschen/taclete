@@ -72,11 +72,10 @@ class LoginScreen extends Component {
         fetch('/userLoginAttempt', {method:'GET',
             headers: headers,
         })
-            .then(response => response.json())
-            .then(json =>
-                console.log(json)
-            );
-//.done();
+        .then(response => {
+                console.log(response.fields[0]['first_name'])
+                console.log(response.fields[0].first_name)
+        });
 
     };
 

@@ -34,16 +34,14 @@ app.get("/userLoginAttempt", (req, res) => {
     name: 'fetch-user',
     text: 'SELECT * FROM athlete WHERE email = $1 AND password = $2',
     values: [username, password],
+    rowMode: 'array',
   };
   
   client.query(query, (err, res) => {
     if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
     client.end();
-    console.log(res);
-    return res.rows;
+    //console.log(res);
+    return res;
   });
 });
 
