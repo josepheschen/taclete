@@ -37,16 +37,23 @@ app.get("/userLoginAttempt", (req, res) => {
     name: 'fetch-user',
     text: 'SELECT * FROM athlete WHERE email = $1 AND password = $2',
     values: [username, password],
+    rowMode: 'array',
   };
 
   var storedResult;
   
   client.query(query, (err, res) => {
     if (err) throw err;
+<<<<<<< Updated upstream
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
     }
     storedResult = res;
+=======
+    client.end();
+    //console.log(res);
+    return res;
+>>>>>>> Stashed changes
   });
   client.end();
   return storedResult;

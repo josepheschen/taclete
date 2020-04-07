@@ -72,8 +72,16 @@ class LoginScreen extends Component {
         fetch('/userLoginAttempt', {method:'GET',
             headers: headers,
         })
+<<<<<<< Updated upstream
             .then(response => response.json())
             .then(json => console.log(json));
+=======
+            .then(response => {
+                    console.log(response.fields[0]['first_name'])
+                    console.log(response.fields[0].first_name)
+            });
+
+>>>>>>> Stashed changes
 //.done();
 
     };
