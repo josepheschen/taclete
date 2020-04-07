@@ -26,10 +26,7 @@ app.get("/ping", function(req, res) {
 app.get("/userLoginAttempt", (req, res) => {
 
   let username = req.headers['user'];
-  console.log(username);
   let password = req.headers['password'];
-  console.log(password);
-
   client.connect();
 
   const query = {
@@ -45,7 +42,8 @@ app.get("/userLoginAttempt", (req, res) => {
       console.log(JSON.stringify(row));
     }
     client.end();
-    return res;
+    console.log(res);
+    return res.rows;
   });
 });
 

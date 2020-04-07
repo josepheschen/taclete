@@ -52,6 +52,7 @@ class LoginScreen extends Component {
         try {
             await this.checkLoginInfo();
         } catch (err) {
+            console.log("this is where this is");
             console.log(err);
         }
 
@@ -65,7 +66,6 @@ class LoginScreen extends Component {
 
         let headers = new Headers();
 
-//headers.append('Content-Type', 'text/json');
         headers.append('user', username);
         headers.append('password', password);
 
@@ -73,7 +73,9 @@ class LoginScreen extends Component {
             headers: headers,
         })
             .then(response => response.json())
-            .then(json => console.log(json));
+            .then(json =>
+                console.log(json)
+            );
 //.done();
 
     };
