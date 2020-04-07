@@ -52,6 +52,7 @@ class LoginScreen extends Component {
         try {
             await this.checkLoginInfo();
         } catch (err) {
+            console.log("this is where this is");
             console.log(err);
         }
 
@@ -65,24 +66,16 @@ class LoginScreen extends Component {
 
         let headers = new Headers();
 
-//headers.append('Content-Type', 'text/json');
         headers.append('user', username);
         headers.append('password', password);
 
         fetch('/userLoginAttempt', {method:'GET',
             headers: headers,
         })
-<<<<<<< Updated upstream
-            .then(response => response.json())
-            .then(json => console.log(json));
-=======
-            .then(response => {
-                    console.log(response.fields[0]['first_name'])
-                    console.log(response.fields[0].first_name)
-            });
-
->>>>>>> Stashed changes
-//.done();
+        .then(response => {
+                console.log(response.fields[0]['first_name'])
+                console.log(response.fields[0].first_name)
+        });
 
     };
 

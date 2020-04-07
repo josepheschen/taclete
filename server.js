@@ -26,10 +26,7 @@ app.get("/ping", function(req, res) {
 app.get("/userLoginAttempt", (req, res) => {
 
   let username = req.headers['user'];
-  console.log(username);
   let password = req.headers['password'];
-  console.log(password);
-
   client.connect();
 
   const query = {
@@ -39,24 +36,13 @@ app.get("/userLoginAttempt", (req, res) => {
     values: [username, password],
     rowMode: 'array',
   };
-
-  var storedResult;
   
   client.query(query, (err, res) => {
     if (err) throw err;
-<<<<<<< Updated upstream
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-    storedResult = res;
-=======
     client.end();
     //console.log(res);
     return res;
->>>>>>> Stashed changes
   });
-  client.end();
-  return storedResult;
 });
 
 app.get("/*", function(req, res) {
