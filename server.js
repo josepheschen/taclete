@@ -14,16 +14,16 @@ const { DATABASE_URL } = process.env;
 const { Client } = require('pg');
 
 //For local database connection
-const localConfig = {
-  connectionString: "postgres://admin:taclete2020@localhost:5432/taclete"
-};
-let client = new Client(localConfig);
-
-// const config = {
-//   connectionString: DATABASE_URL,
-//   ssl: true
+// const localConfig = {
+//   connectionString: "postgres://admin:taclete2020@localhost:5432/taclete"
 // };
-// let client = new Client(config);
+// let client = new Client(localConfig);
+
+const config = {
+  connectionString: DATABASE_URL,
+  ssl: true
+};
+let client = new Client(config);
 
 
 app.get("/ping", function(req, res) {
