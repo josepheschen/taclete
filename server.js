@@ -11,11 +11,18 @@ app.use(express.static(path.join(__dirname, "build")));
 const { DATABASE_URL } = process.env;
 const { Client } = require('pg');
 
-const config = {
-  connectionString: DATABASE_URL,
-  ssl: true
+//For local database connection
+const localConfig = {
+  connectionString: "postgres://admin:taclete2020@localhost:5432/taclete"
 };
-let client = new Client(config);
+let client = new Client(localConfig);
+
+// const config = {
+//   connectionString: DATABASE_URL,
+//   ssl: true
+// };
+// let client = new Client(config);
+
 
 app.get("/ping", function(req, res) {
   console.log("hello this is a log");
@@ -23,10 +30,10 @@ app.get("/ping", function(req, res) {
   return res.send("pong");
 });
 
-app.get("/userLoginAttempt", (req, res) => {
+app.post("/userLoginAttempt", (req, res) => {
 
-  let username = req.headers['user'];
-  let password = req.headers['password'];
+  let username = req.data['user'];
+  let password = req.data['password'];
   client.connect();
 
   const query = {
@@ -34,15 +41,25 @@ app.get("/userLoginAttempt", (req, res) => {
     name: 'fetch-user',
     text: 'SELECT * FROM athlete WHERE email = $1 AND password = $2',
     values: [username, password],
-    rowMode: 'array',
   };
   
-  client.query(query, (err, res) => {
+  client.query(query, (err, queryRes) => {
+    console.log(JSON.stringify(queryRes));
+    console.log(err);
     if (err) throw err;
-    client.end();
-    //console.log(res);
-    return res;
-  });
+    if (queryRes.rows.length === 1) {
+      res.status(201);
+      let data = queryRes.rows[0];
+      res.send({
+        firstName: data['first_name'],
+        lastName: data['last_name'],
+        cohortType: 'ROTC',
+      })
+    } else {
+     res.status(500);
+    }
+  }).finally(() => client.end());
+
 });
 
 app.get("/*", function(req, res) {

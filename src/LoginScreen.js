@@ -51,8 +51,8 @@ class LoginScreen extends Component {
     async onSubmit() {
         try {
             await this.checkLoginInfo();
+            console.log("checked login info");
         } catch (err) {
-            console.log("this is where this is");
             console.log(err);
         }
 
@@ -60,22 +60,28 @@ class LoginScreen extends Component {
     };
 
     async checkLoginInfo() {
-
         let username = this.state.email;
         let password = this.state.password;
 
-        let headers = new Headers();
-
-        headers.append('user', username);
-        headers.append('password', password);
-
-        fetch('/userLoginAttempt', {method:'GET',
-            headers: headers,
-        })
-        .then(response => {
-                console.log(response.fields[0]['first_name'])
-                console.log(response.fields[0].first_name)
+        let data = [];
+        data.push({
+            key: 'username',
+            value: username
         });
+        data.push({
+            key: 'password',
+            value: password
+        });
+
+        await fetch('/userLoginAttempt', {
+            method:'POST',
+            body: JSON.stringify(data),
+        })
+        .then(response => response.JSON())
+        .then( (data) => {
+            console.log("Success:", data);
+        }).catch(error => console.log(error));
+
 
     };
 
