@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 3001;
 const publicPath = path.join(__dirname, "..", "public");
@@ -7,6 +8,7 @@ const publicPath = path.join(__dirname, "..", "public");
 app.use(express.static(publicPath));
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "build")));
+app.use(express.json({ limit: '1mb'}));
 
 const { DATABASE_URL } = process.env;
 const { Client } = require('pg');
@@ -31,9 +33,11 @@ app.get("/ping", function(req, res) {
 });
 
 app.post("/userLoginAttempt", (req, res) => {
+  console.log("I got a request!");
+  console.log(req.body);
 
-  let username = req.data['user'];
-  let password = req.data['password'];
+  let username = req.body['username'];
+  let password = req.body['password'];
   client.connect();
 
   const query = {
@@ -44,21 +48,20 @@ app.post("/userLoginAttempt", (req, res) => {
   };
   
   client.query(query, (err, queryRes) => {
-    console.log(JSON.stringify(queryRes));
-    console.log(err);
     if (err) throw err;
     if (queryRes.rows.length === 1) {
-      res.status(201);
       let data = queryRes.rows[0];
-      res.send({
+      res.json({
         firstName: data['first_name'],
         lastName: data['last_name'],
-        cohortType: 'ROTC',
+        accountType: data['cohort_type'],
       })
     } else {
      res.status(500);
     }
-  }).finally(() => client.end());
+    client.end();
+    res.end();
+  });
 
 });
 

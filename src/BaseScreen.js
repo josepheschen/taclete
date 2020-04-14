@@ -31,6 +31,7 @@ class BaseScreen extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.registerButton=this.registerButton.bind(this);
+        this.handleAccountTypeChange = this.handleAccountTypeChange.bind(this);
     }
 
     handleEmailChange = (value) => {
@@ -43,6 +44,15 @@ class BaseScreen extends Component {
         this.setState({
             'password': value
         });
+    };
+
+    handleAccountTypeChange = (value) => {
+        if(value) {
+            this.setState({
+                [value]: true,
+                LOGIN: false
+            });
+        }
     };
     
     handleSubmit = () => {
@@ -99,6 +109,7 @@ class BaseScreen extends Component {
                     <LoginScreen
                         handleEmailChange={this.handleEmailChange}
                         handlePasswordChange={this.handlePasswordChange}
+                        handleAccountTypeChange={this.handleAccountTypeChange}
                         handleSubmit={this.handleSubmit}
                         registerButton={this.registerButton}
                     />
