@@ -49,34 +49,37 @@ class LoginScreen extends Component {
     };
 
     async onSubmit() {
-        try {
-            await this.checkLoginInfo();
-        } catch (err) {
-            console.log("this is where this is");
-            console.log(err);
-        }
-
-        this.props.handleSubmit();
-    };
-
-    async checkLoginInfo() {
-
         let username = this.state.email;
         let password = this.state.password;
 
-        let headers = new Headers();
+        let data = {
+            'username': username,
+            'password': password,
+        };
 
-        headers.append('user', username);
-        headers.append('password', password);
+        let accountType = '';
 
-        fetch('/userLoginAttempt', {method:'GET',
-            headers: headers,
-        })
-        .then(response => {
-                console.log(response.fields[0]['first_name'])
-                console.log(response.fields[0].first_name)
+        try {
+            accountType = await this.checkLoginInfo(data);
+        } catch (err) {
+            console.log(err);
+        }
+        this.props.handleAccountTypeChange(accountType);
+        this.props.handleSubmit();
+
+    };
+
+    async checkLoginInfo(data) {
+
+        const response = await fetch('/userLoginAttempt', {
+            method:'post',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(data),
         });
-
+        const json  = await response.json();
+        return json['accountType'];
     };
 
     render() {
