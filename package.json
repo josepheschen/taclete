@@ -28,7 +28,7 @@
     "pg-native": "^3.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-scripts": "3.3.0",
+    "react-scripts": "5.0.1",
     "react-select": "^3.0.8",
     "react-window": "^1.8.5",
     "snackbar": "^1.1.0",
